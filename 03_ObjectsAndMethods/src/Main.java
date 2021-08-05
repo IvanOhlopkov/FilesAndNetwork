@@ -5,5 +5,7 @@ public class Main {
         basket.add("Milk", 40, 1, 1);
         basket.add("Potato", 33, 2, 5);
         basket.print("Milk");
+        Arithmetic arithmetic = new Arithmetic(1, 2);
+        System.out.println(arithmetic.getMinOfNumbers());
     }
 }
