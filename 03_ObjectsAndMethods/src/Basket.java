@@ -36,9 +36,11 @@ public class Basket {
         add(name, price, 1, 0);
     }
 
-    public void add(String name, int price, int count) {  add(name, price, count, 0 ); }
+    public void add(String name, int price, int count) {
+        add(name, price, count, 0);
+    }
 
-    public void add(String name, int price, int count, double weight){
+    public void add(String name, int price, int count, double weight) {
         boolean error = false;
         if (contains(name)) {
             error = true;
@@ -69,7 +71,9 @@ public class Basket {
         return totalPrice;
     }
 
-    public double getTotalWeight() {return totalWeight;}
+    public double getTotalWeight() {
+        return totalWeight;
+    }
 
     public boolean contains(String name) {
         return items.contains(name);
