@@ -7,5 +7,17 @@ public class Main {
         basket.print("Milk");
         Arithmetic arithmetic = new Arithmetic(1, 2);
         System.out.println(arithmetic.getMinOfNumbers());
+
+        System.out.println("______________");
+
+        Printer printer = new Printer();
+        printer.append("текст 1");
+        printer.append("текст 2", "Название 1");
+        printer.append("текст 3", 3);
+        System.out.println(printer.getPrintedPagesCount());
+        System.out.println(printer.getPendingPagesCount());
+        printer.print();
+        System.out.println(printer.getPrintedPagesCount());
+        System.out.println(printer.getPendingPagesCount());
     }
 }
