@@ -4,20 +4,13 @@ public class Main {
         Basket basket = new Basket();
         basket.add("Milk", 40, 1, 1);
         basket.add("Potato", 33, 2, 5);
-        basket.print("Milk");
-        Arithmetic arithmetic = new Arithmetic(1, 2);
-        System.out.println(arithmetic.getMinOfNumbers());
+        Basket basket1 = new Basket();
+        basket1.add("Bread", 30, 2, 3);
 
-        System.out.println("______________");
+        System.out.println("Общая цена всех корзин: " + Basket.allBasketTotalPrice);
+        System.out.println("Общее кол-во товаров во всех корзинах: " + Basket.totalAmountProduct);
+        System.out.println("Средняя цена товара во всех корзинах: " + Basket.averagePriceProductOfAllBasket());
+        System.out.println("Средняя стоимость корзины: " + Basket.averagePriceBasket());
 
-        Printer printer = new Printer();
-        printer.append("текст 1");
-        printer.append("текст 2", "Название 1");
-        printer.append("текст 3", 3);
-        System.out.println(printer.getPrintedPagesCount());
-        System.out.println(printer.getPendingPagesCount());
-        printer.print();
-        System.out.println(printer.getPrintedPagesCount());
-        System.out.println(printer.getPendingPagesCount());
     }
 }
