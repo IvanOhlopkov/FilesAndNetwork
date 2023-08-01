@@ -1,10 +1,10 @@
-public class Operator implements Employee{
-    double OperatorRateSalary;
+import java.util.Locale;
+
+public class Operator implements Employee {
     private final double monthSalary;
 
     public Operator(double rateSalary) {
-        this.OperatorRateSalary = rateSalary;
-        this.monthSalary = calcMonthSalary();
+        this.monthSalary = rateSalary * Math.random() + rateSalary;
     }
 
     @Override
@@ -13,12 +13,7 @@ public class Operator implements Employee{
     }
 
     @Override
-    public double calcMonthSalary() {
-        return OperatorRateSalary;
-    }
-
-    @Override
     public String toString() {
-        return getMonthSalary() + " руб.";
+        return String.format(Locale.ROOT, "%.2f", getMonthSalary()) + " руб.";
     }
 }

@@ -1,21 +1,24 @@
 import java.util.*;
 
 public class Company {
-    private final ArrayList<Employee> employees;
+    private final List<Employee> employees;
 
     public Company(){
         employees = new ArrayList<>();
     }
-    public Company(double income, int operators, int managers, int topManagers){
+
+    public Company(int operators, int operatorsSalaryRate,
+                   int managers, int managersSalaryRate,
+                   int topManagers, int topManagersSalaryRate) {
         this.employees = new ArrayList<>();
         for (int i = 0; i < operators; i++) {
-            hire(new Operator(100_000));
+            hire(new Operator(operatorsSalaryRate));
         }
         for (int i = 0; i < managers; i++) {
-            hire(new Manager(110_000));
+            hire(new Manager(managersSalaryRate));
         }
         for (int i = 0; i < topManagers; i++) {
-            hire(new TopManager(150_000, income));
+            hire(new TopManager(topManagersSalaryRate, this));
         }
     }
 
@@ -32,22 +35,36 @@ public class Company {
     }
 
     public List<Employee> getTopSalaryStaff(int count) {
+        return getList(count, Comparator.reverseOrder());
+    }
+
+    public List<Employee> getLowestSalaryStaff(int count) {
+        return getList(count, Comparator.naturalOrder());
+    }
+
+    private List<Employee> getList(int count, Comparator<Employee> comparator) {
         if (count < 0) {
-            count = Math.abs(count);
+            System.out.println("Передано неверное значение");
+            return Collections.emptyList();
         }
         if (count > employees.size()) {
             count = employees.size();
         }
-        employees.sort((o1, o2) -> -Double.compare(o1.getMonthSalary(), o2.getMonthSalary()));
-      return employees.subList(0, count);
+        employees.sort(comparator);
+        return new ArrayList<>(employees.subList(0, count));
     }
 
-    public List<Employee> getLowestSalaryStaff(int count) {
-        employees.sort(Comparator.comparingDouble(Employee::getMonthSalary));
-        return employees.subList(0, count);
+    public double getIncome() {
+        double income = 0;
+        for (Employee e : employees) {
+            if (e instanceof Manager) {
+                income += (((Manager) e).getSales());
+            }
+        }
+        return income;
     }
 
-    public ArrayList<Employee> getEmployeeList(){
-        return employees;
+    public List<Employee> getEmployeeList() {
+        return new ArrayList<>(employees);
     }
 }

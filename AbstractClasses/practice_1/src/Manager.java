@@ -1,13 +1,15 @@
+import java.util.Locale;
+
 public class Manager implements Employee {
-    double managerSalaryRate;
     final int MIN_EARNED_MONEY = 115_000;
     final int MAX_EARNED_MONEY = 140_000;
     final double BONUS_PERCENT = 0.05;
     private final double monthSalary;
+    private final double sales;
 
     public Manager(double managerSalaryRate) {
-        this.managerSalaryRate = managerSalaryRate;
-        this.monthSalary = calcMonthSalary();
+        sales = MIN_EARNED_MONEY + (int) (Math.random() * MAX_EARNED_MONEY + 1);
+        monthSalary = managerSalaryRate + sales * BONUS_PERCENT;
     }
 
     @Override
@@ -15,16 +17,12 @@ public class Manager implements Employee {
         return monthSalary;
     }
 
-    @Override
-    public double calcMonthSalary() {
-        return managerSalaryRate +
-                (MIN_EARNED_MONEY + (int) (Math.random() * MAX_EARNED_MONEY + 1))
-                        * BONUS_PERCENT;
-
+    public double getSales() {
+        return sales;
     }
 
     @Override
     public String toString() {
-        return getMonthSalary() + " руб.";
+        return String.format(Locale.ROOT, "%.2f", getMonthSalary()) + " руб.";
     }
 }
