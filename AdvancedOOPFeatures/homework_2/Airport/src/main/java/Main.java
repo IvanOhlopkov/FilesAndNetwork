@@ -1,7 +1,8 @@
 import com.skillbox.airport.Airport;
 import com.skillbox.airport.Flight;
-import java.util.Collections;
-import java.util.List;
+import com.skillbox.airport.Terminal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,8 +11,13 @@ public class Main {
     }
 
     public static List<Flight> findPlanesLeavingInTheNextTwoHours(Airport airport) {
-        //TODO Метод должден вернуть список рейсов вылетающих в ближайшие два часа.
-        return Collections.emptyList();
+        return airport.getTerminals().stream()
+                .map(Terminal::getFlights)
+                .flatMap(Collection::stream)
+                .filter(flight -> flight.getType().equals(Flight.Type.DEPARTURE))
+                .filter(f -> f.getDate().after(new Date(System.currentTimeMillis())))
+                .filter(f -> f.getDate().before(new Date(System.currentTimeMillis() + 7200000)))
+                .collect(Collectors.toList());
     }
 
 }
