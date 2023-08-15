@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <appenders>
+        <File name="QueryFile" fileName="logs/queries.log">
+            <PatternLayout>
+                    <Pattern>[%date{ISO8601}][%-5level][%t] %m%n</Pattern>
+            </PatternLayout>
+            <Filters>
+                <MarkerFilter marker="QUERY" />
+            </Filters>
+        </File>
+        <File name="ErrorFile" fileName="logs/errors.log">
+            <PatternLayout>
+                <Pattern>[%date{ISO8601}][%-5level][%t] %m%n</Pattern>
+            </PatternLayout>
+            <Filters>
+                <MarkerFilter marker="ERROR" />
+            </Filters>
+        </File>
+    </appenders>
+
+    <loggers>
+        <root level="info">
+            <appender-ref ref="ErrorFile" level="error" />
+            <appender-ref ref="QueryFile" level="info" />
+        </root>
+    </loggers>
+</configuration>
+

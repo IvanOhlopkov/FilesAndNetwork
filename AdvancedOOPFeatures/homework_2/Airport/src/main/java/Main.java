@@ -1,6 +1,7 @@
 import com.skillbox.airport.Airport;
 import com.skillbox.airport.Flight;
 import com.skillbox.airport.Terminal;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
