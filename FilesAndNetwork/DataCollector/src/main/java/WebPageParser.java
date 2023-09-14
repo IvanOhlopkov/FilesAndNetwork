@@ -5,14 +5,10 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class WebPageParser {
-    public static void main(String[] args) throws IOException {
-
-        String url = "https://skillbox-java.github.io/";
-        System.out.println(parsePage(getHtml(url)));
-
-    }
 
     public static Document getHtml(String url) throws IOException {
         return Jsoup.connect(url).get();
@@ -29,21 +25,40 @@ public class WebPageParser {
             metroMap.put("lines", lines);
 
             List<Station> stations = new ArrayList<>();
-            for (Element station : element.select(".single-station")) {
-                if (station.children().attr("title").startsWith("переход")) {
-                    stations.add(new Station(station.select(".name").text(),
-                            station.parent().attr("data-line"), true));
+
+
+            String stationRegex = "«([^»]+)»";
+            String lineRegex = "[^ln-]+$";
+            String number = null;
+            String name = null;
+            for (Element stationElement : element.select(".single-station")) {
+                if (stationElement.children().attr("title").startsWith("переход")) {
+                    Station station = new Station(stationElement.select(".name").text(),
+                            stationElement.parent().attr("data-line"), true);
+                    stations.add(station);
+                    LinkedHashMap<String, String> connections = new LinkedHashMap<>();
+
+                    for (Element connectStation : stationElement.getElementsByClass("t-icon-metroln")) {
+                        Pattern patternTitle = Pattern.compile(stationRegex);
+                        Matcher matcherTitle = patternTitle.matcher(connectStation.attr("title"));
+                        while (matcherTitle.find()) {
+                            name = matcherTitle.group(1);
+                        }
+                        Pattern patternClass = Pattern.compile(lineRegex);
+                        Matcher matcherClass = patternClass.matcher(connectStation.attr("class"));
+                        while (matcherClass.find()) {
+                            number = matcherClass.group();
+                        }
+                        connections.put(number, name);
+                    }
+                    station.setConnections(connections);
                 } else {
-                    stations.add(new Station(station.select(".name").text()
-                            , station.parent().attr("data-line")));
+                    stations.add(new Station(stationElement.select(".name").text()
+                            , stationElement.parent().attr("data-line"), false));
                 }
             }
             metroMap.put("stations", stations);
         }
         return metroMap;
     }
-
-    //public static TreeMap<> getConnections(){
-
-
 }

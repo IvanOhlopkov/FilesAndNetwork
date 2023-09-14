@@ -1,27 +1,27 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.*;
 
 public class CsvFileParser {
-    public static void main(String[] args) throws IOException {
-        List<String> list = FindFiles.searchFiles("data", ".csv");
-        parse(list);
-    }
+    public static LinkedHashSet<String> parse(String path, String formatFile) throws IOException {
+        FindFiles findFiles = new FindFiles();
+        List<String> list = findFiles.searchFiles(path, formatFile);
 
-    public static void parse(List<String> list) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(list.get(0)));
-        String firtsLine = null;
-        for(String line : lines) {
-            String[] fragments = line.split(",");
-            if(firtsLine == null) {
-                firtsLine = line;
-                continue;
+        List<String> stationsDateNotUnique = new ArrayList<>();
+        for (String file : list) {
+            List<String> lines = Files.readAllLines(Paths.get(file));
+            String firtsLine = null;
+            for (String line : lines) {
+                if (firtsLine == null) {
+                    firtsLine = line;
+                    continue;
+                }
+                stationsDateNotUnique.add(line.replace("Воробьёвы", "Воробьевы"));
             }
-            System.out.println(fragments[0]);
-            System.out.println(fragments[1]);
         }
+        stationsDateNotUnique.sort(String::compareTo);
+        return new LinkedHashSet<>(stationsDateNotUnique);
     }
-
 }
 
