@@ -50,11 +50,7 @@ public class SiteMapRecursiveTask extends RecursiveTask<SortedSet<String>> {
 
             String link = element.attr("href");
             Matcher matcher = pattern.matcher(link);
-            if (!matcher.find()) {
-                continue;
-            }
-
-            if (link.contains("/#")){
+            if (!matcher.find() || link.contains("/#")){
                 continue;
             }
 
