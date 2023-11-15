@@ -25,13 +25,13 @@ public class WorkTime {
     }
 
     public String toString() {
-        String line = "";
+        StringBuilder builder = new StringBuilder();
         for (TimePeriod period : periods) {
-            if (!line.isEmpty()) {
-                line += ", ";
+            if (!builder.isEmpty()) {
+                builder.append(", ");
             }
-            line += period;
+            builder.append(period);
         }
-        return line;
+        return builder.toString();
     }
 }

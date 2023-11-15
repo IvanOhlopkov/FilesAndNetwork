@@ -28,7 +28,7 @@ public class Voter {
 
     public String toString() {
         SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy.MM.dd");
-        return name + " (" + dayFormat.format(birthDay) + ")";
+        return name.concat(" (").concat(dayFormat.format(birthDay)).concat(")");
     }
 
     public String getName() {

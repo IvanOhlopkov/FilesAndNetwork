@@ -48,11 +48,12 @@ public class TimePeriod implements Comparable<TimePeriod> {
     }
 
     public String toString() {
+        StringBuilder builder = new StringBuilder();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         String from = dateFormat.format(this.from);
         String to = timeFormat.format(this.to);
-        return from + "-" + to;
+        return builder.append(from).append("-").append(to).toString();
     }
 
     @Override
